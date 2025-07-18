@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yoga Teacher Training - Presentation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs"></script>
+</head>
+<body class="flex flex-col min-h-screen" x-data="presentation()" x-init="init()">
+  <!-- Header -->
+  <div x-html="header"></div>
+
+  <!-- Main Content Area -->
+  <div class="flex flex-1 relative">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-100 p-4 overflow-y-auto" x-html="sidebar"></aside>
+
+    <!-- Slides -->
+    <main class="flex-1 relative overflow-y-auto">
+      <template x-for="(frame, index) in frames" :key="frame.id">
+        <section
+          x-show="active === frame.id"
+          x-transition:enter="transition transform duration-500"
+          x-transition:enter-start="translate-x-full opacity-0"
+          x-transition:enter-end="translate-x-0 opacity-100"
+          x-transition:leave="transition transform duration-300 absolute"
+          x-transition:leave-start="translate-x-0 opacity-100"
+          x-transition:leave-end="-translate-x-full opacity-0"
+          class="absolute top-0 left-0 w-full p-6 bg-white z-10"
+          :id="frame.id"
+        >
+         <template x-if="frame.id === 'frame1'">
+  <div x-show="frame.id === 'frame1'">
+    <div class="max-w-3xl mx-auto">
+      <img
+        src="images/frame1.jpg"
+        alt="योग का प्रथम अंग 'यम'"
+        class="w-full h-auto rounded-lg shadow mb-6"
+      />
+
+      <h2 class="text-2xl font-bold mb-4">योग का प्रथम अंग 'यम'</h2>
+      <p class="mb-4">
+        यम 'योग के आठ अंगों' में से पहला अंग हैं, जिसकी उत्पत्ति प्राचीन भारतीय
+        दार्शनिक ग्रंथ 'पतंजलि के योग सूत्र' से हुई है। प्रत्येक अंग योग अभ्यास के एक विशेष
+        पहलू का वर्णन करता है, जो सभी मुक्ति और ज्ञान की ओर ले जाते हैं।
+      </p>
+      <p class="mb-4">
+        योग-दर्शन के पातंजलि सूत्र 30 में यम के सम्बन्ध में बताया गया है-<br />
+        अहिंसा सत्‍यास्तेय ब्रह्मचर्यापरिग्रहा यमाः। अर्थात् अहिंसा, सत्य, अस्तेय,
+        ब्रह्मचर्य और अपरिग्रह यह पंच यम हैं। इनकी उपर्युक्त पाँच शब्दों से परिभाषा की गई है।
+        इस पंचयम समूह का नाम यम रखा गया है। यम शब्द से तात्पर्य पंच यमों की भावना से भी है।
+        क्रमशः प्रत्येक के बारे में कुछ विवेचना की जाती है।
+      </p>
+
+      <h3 class="text-xl font-semibold mb-2">1. अहिंसा</h3>
+      <p class="mb-4">
+        अहिंसा का अर्थ है किसी भी प्राणी को न सताना। दूसरों को शारीरिक रूप से, मानसिक रूप से
+        या प्रकृति को भौतिक रूप से नुक़सान न पहुँचाना; दूसरों या खुद के बारे में नकारात्मक विचार
+        न रखना; और यह सुनिश्चित करना कि हम जो करते हैं और जिस तरह से करते हैं वह सद्भावनापूर्ण हो,
+        न कि नुकसान पहुँचाने वाला हो।
+      </p>
+
+      <h3 class="text-xl font-semibold mb-2">2. सत्य</h3>
+      <p>
+        सत्य का अर्थ है सच्चाई, लेकिन यह सिर्फ़ सच बोलने से कहीं ज़्यादा है। 'सत्य' शब्द का
+        शाब्दिक अर्थ है 'सच्चा सार' या 'अपरिवर्तनीय'। हमारे विचार, भावनाएँ और मनोदशाएँ एक दूसरे से
+        बदली जा सकती हैं, फिर भी वे ऐसी चीज़ें हैं जो हमारा अपना सत्य बनाती हैं। योग में सत्य थोड़ी सी
+        झूठ बनाने पर काम करता है ताकि हम महसूस कर सकें कि हम सिर्फ़ अपने विचार नहीं हैं।
+      </p>
+
+      <div class="flex justify-between mt-6">
+        <button class="px-4 py-2 bg-gray-300 rounded" disabled>
+          Previous
+        </button>
+        <button
+          class="px-4 py-2 bg-blue-500 text-white rounded"
+          @click="next()"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+          <template x-if="frame.id === 'frame2'">
+  <div x-show="frame.id === 'frame2'">
+    <div class="max-w-3xl mx-auto">
+      <img
+        src="images/frame2.jpg"
+        alt="अस्तेय, ब्रह्मचर्य, अपरिग्रह"
+        class="w-full h-auto rounded-lg shadow mb-6"
+      />
+
+      <h2 class="text-2xl font-bold mb-4">Frame 2 Content</h2>
+
+      <h3 class="text-xl font-semibold mb-2">3. अस्तेय (चोरी न करना)</h3>
+      <p class="mb-4">
+        अस्तेय का अर्थ है 'चोरी न करना', लेकिन अन्य यम और नियमों की तरह, इसका अर्थ इससे कहीं अधिक है।
+        यह वृत्ति अन्तः (मन के विचार/उत्तर-चयन) से उत्पन्न होती है - "मैं पर्याप्त अच्छा नहीं हूँ" या
+        "मेरे पास पर्याप्त नहीं है"। यह खुद पर विश्वास की कमी से उत्पन्न होती है। 'yog' शब्द का अर्थ है
+        'जोड़ना', 'एकत्र होना', 'जुटाना', या भावनात्मक रूप से संपूर्ण बनना। यह न केवल धन या वस्तुओं की
+        चोरी से रोकता है, बल्कि दूसरों के विचार, समय या अधिकारों का अनुचित उपयोग करने से भी मना करता है।
+        अस्तेय का पालन करने से मन शुद्ध होता है और समाज में विश्वास बढ़ता है।
+      </p>
+
+      <h3 class="text-xl font-semibold mb-2">
+        4. ब्रह्मचर्य (इन्द्रियों का संयम / ऊर्जा का सही उपयोग)
+      </h3>
+      <p class="mb-4">
+        ब्रह्मचर्य शब्द आमतौर पर 'ब्रह्मचर्य' के रूप में लिया जाता है। इसे इसलिए अक्सर हमारी आधुनिक
+        संस्कृति में अप्रासंगिक माना जाता है। ब्रह्मचर्य शब्द का मतलब है ‘ऐसा व्यवहार जो ब्रह्म की ओर
+        ले जाता है’। हिंदू धर्म और योगिक शब्दों में ब्रह्म को सृष्टि का निर्माता माना जाता है। इसलिए
+        ब्रह्मचर्य को 'ऊर्जा के सही उपयोग' के रूप में देखा जा सकता है। इसका मतलब है अपनी ऊर्जा को बाहरी
+        इच्छाओं से दूर रखना और इसके बजाय, अपनी भीतर शांति और खुशी पाने की दिशा में निर्देशित करना।
+      </p>
+
+      <h3 class="text-xl font-semibold mb-2">5. अपरिग्रह (लालच न करना)</h3>
+      <p class="mb-4">
+        अपरिग्रह - 'गैर-लोभ', 'गैर-स्वामित्व' और 'गैर-आसक्ति'। यह महत्वपूर्ण यम हमें सिखाता है कि हमें
+        केवल वही लेना चाहिए जिसकी हमें आवश्यकता है, केवल वही रखना चाहिए जो इस समय हमारे काम आ रहा है और
+        जब सही समय हो तो उसे छोड़ देना चाहिए।
+      </p>
+
+      <div class="flex justify-between mt-6">
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+          Previous
+        </button>
+        <button
+          class="px-4 py-2 bg-blue-500 text-white rounded"
+          @click="next()"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+          <template x-if="frame.id === 'frame3'">
+  <div x-show="frame.id === 'frame3'">
+    <div class="max-w-3xl mx-auto">
+      <img
+        src="images/frame3.jpg"
+        alt="अष्टांग योग के नियम"
+        class="w-full h-auto rounded-lg shadow mb-6"
+      />
+
+      <h2 class="text-2xl font-bold mb-4">Frame 3: अष्टांग योग के नियम (Niyama in Ashtanga Yoga)</h2>
+
+      <p class="mb-4">
+        संसार में योग की परंपरा काफ़ी पुरानी है। वेद-पुराणों के अनुसार ऋषियों और तपस्वियों द्वारा ही योग
+        की विधि को अपनाया गया है। योग के प्रसिद्ध ग्रंथ पतंजलयोगदर्शन (Patanjali Yoga Darshan) में इसके
+        बारे में विस्तृत रूप से बताया गया है।
+      </p>
+
+      <p class="mb-4">
+        इसके अनुसार <strong>योगश्चित्तवृत्तिनिरोधः</strong> यानी मन की वृत्तियों पर नियंत्रण करना ही योग
+        है। श्री कृष्ण द्वारा गीता में भी एक स्थान पर कहा गया है कि, "<strong>योग: कर्मषु कौशलम्</strong>"
+        यानी कर्मों में कुशलता ही योग है। अष्टांग योग के आठ अंगों में दूसरा अंग है <strong>नियम</strong>
+        (Niyama)।
+      </p>
+
+      <p class="mb-4">
+        योगशास्त्र में आत्म-संयम एवं सकारात्मक कल्पना या ‘पालन’ के परिप्रेक्ष्य और साथ ही श्रेष्ठ जीवन
+        शैली के लिए योग के नियमों का महत्व काफी ज़्यादा है। यम और नियम सुव्यवस्थित एवं संयमित जीवन में
+        अग्रसर होने की प्रक्रिया से ही संबंधित हैं। इसमें ऐसे कर्मों के बारे में बताया गया है जो हमें
+        खुद को शुद्धि के लिए करने हैं।
+      </p>
+
+      <p class="mb-4">
+        <strong>नियम के पांच प्रकार</strong> हैं - शौच, संतोष, तप, स्वाध्याय और ईश्वर प्रणीधान। इन नियमों
+        के बारे में विस्तार से जानते हैं:
+      </p>
+
+      <h3 class="text-xl font-semibold mb-2">1. शौच (Saucha)</h3>
+      <p class="mb-4">
+        यहाँ शौच का मतलब मन और शरीर की पवित्रता से होता है। यानी सिर्फ शरीर को साफ़ रखना ही शौच नहीं है,
+        बल्कि मन से गलत भावना को निकालना भी शौच है। अष्टांग योग के शौच नियम में मन की अंतःशुद्धि, राग,
+        द्वेष आदि का त्याग कर मन को निर्मल करने की प्रक्रिया होती है।
+      </p>
+
+      <div class="flex justify-between mt-6">
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+          Previous
+        </button>
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="next()">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+
+
+          <template x-if="frame.id === 'frame4'">
+  <div x-show="frame.id === 'frame4'">
+    <div class="max-w-3xl mx-auto">
+      <img
+        src="images/frame4.jpg"
+        alt="अष्टांग योग नियम - संतोष से ईश्वर प्राणिधान"
+        class="w-full h-auto rounded-lg shadow mb-6"
+      />
+
+      <h2 class="text-2xl font-bold mb-4">Frame 4: अष्टांग योग के नियम (Santosha से Ishwar Pranidhana)</h2>
+
+      <h3 class="text-xl font-semibold mb-2">2. संतोष (Santosha)</h3>
+      <p class="mb-4">
+        इसे समझना मुश्किल नहीं लेकिन निभाना जरूर मुश्किल है। कर्तव्य का पालन करते हुए जो प्राप्त हो उसमें संतुष्ट रहना या जो कुछ परमात्मा की कृपा से प्राप्त हो, उसमें संतुष्ट रहना ही ‘संतोष’ है।
+      </p>
+
+      <h3 class="text-xl font-semibold mb-2">3. तप (Tapas)</h3>
+      <p class="mb-4">
+        तप या तपस्या का अर्थ होता है मन और शरीर को अनुशासित रखना। सुख-दुख, सर्दी-गर्मी, भूख-प्यास जैसे द्वंदों को सहन करते हुए मन व शरीर को साधना ही ‘तप’ है।
+      </p>
+
+      <h3 class="text-xl font-semibold mb-2">4. स्वाध्याय (Swadhyaya)</h3>
+      <p class="mb-4">
+        स्वाध्याय में केवल वेद-वेदान्तों का ज्ञान अर्जित करना ही नहीं, बल्कि स्वयं को ठीक से जानने के लिए चिंतन करना भी शामिल है। स्वाध्याय का वास्तविक अर्थ है — खुद के अंतर्मन को समझना, ईश्वर की स्तुति करना, विश्वास में वृद्धि करना और आत्मा को शुद्ध करना। धर्मशास्त्रों का अध्ययन, संतों से संवाद आदि स्वाध्याय के रूप हैं।
+      </p>
+
+      <h3 class="text-xl font-semibold mb-2">5. ईश्वर प्राणिधान (Ishvara Pranidhana)</h3>
+      <p class="mb-4">
+        ईश्वर के प्रति श्रद्धा और आस्था रखना ही ईश्वर प्राणिधान कहलाता है। इस नियम का पालन करने का उद्देश्य है — मनुष्य का आंतरिक निर्माण ताकि वह स्वयं को बेहतर समझ सके। मन, वाणी और कर्म से ईश्वर की भक्ति करना, उसके नाम, रूप, गुण, लीला आदि का श्रवण, कीर्तन, और मनन करना — यही 'ईश्वर प्राणिधान' है।
+      </p>
+
+      <div class="flex justify-between mt-6">
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+          Previous
+        </button>
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="next()">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+
+
+
+          <template x-if="frame.id === 'frame5'">
+  <div x-show="frame.id === 'frame5'">
+    <div class="max-w-3xl mx-auto">
+      <img
+        src="images/frame5.jpg"
+        alt="अष्टांग योग - आसन"
+        class="w-full h-auto rounded-lg shadow mb-6"
+      />
+
+      <h2 class="text-2xl font-bold mb-4">Frame 5: अष्टांग योग का तीसरा अंग – आसन</h2>
+
+      <p class="mb-4">
+        आसन का अर्थ है एक विशिष्ट मुद्रा में बैठना, जो आरामदायक हो और जिसे लंबे समय तक स्थिर रखा जा सके। आसन शारीरिक और मानसिक दोनों स्तरों पर स्थायित्व और आराम प्रदान करते हैं।
+      </p>
+
+      <p class="mb-4">
+        मुख्य रूप से आसन दो तरह के होते हैं:
+        <br><strong>1. गतिशील आसन</strong> – वे आसन जिनमें शरीर शारीरिक रूप से गतिशील रहता है।
+        <br><strong>2. स्थिर आसन</strong> – वे आसन जिनमें अभ्यास बहुत कम या बिना गति के होता है।
+      </p>
+
+      <h3 class="text-xl font-semibold mb-2">उत्तम स्वास्थ्य के लिए आसन – ताड़ासन</h3>
+
+      <p class="mb-2">
+        <strong>ताड़ासन:</strong> संस्कृत शब्द ‘ताड़’ का अभिप्राय ताड़ के पेड़ से है। यह आसन इसलिए ताड़ासन कहलाता है क्योंकि इसमें शरीर की स्थिति ताड़ के पेड़ जैसी सीधी हो जाती है।
+      </p>
+
+      <h4 class="font-semibold mt-4 mb-2">प्रविधि:</h4>
+      <ul class="list-disc pl-6 mb-4 space-y-1">
+        <li>सीधे खड़े हो जाएँ, पैर जुड़े हुए हों और पीठ सीधी रहे।</li>
+        <li>दोनों हाथ जांघों के बगल में हों, सामने देखें।</li>
+        <li>भुजाओं को सिर के ऊपर ले जाएँ, हथेलियाँ आमने-सामने रखें।</li>
+        <li>धीरे-धीरे एड़ियों को उठाएँ और पंजों पर खड़े हो जाएँ।</li>
+        <li>पूरा शरीर सिर से लेकर पंजों तक सीधा और तनावयुक्त रखें।</li>
+        <li>वापस लौटते समय धीरे से एड़ियों को नीचे लाएँ और हाथों को नीचे लाकर विश्राम करें।</li>
+      </ul>
+
+      <h4 class="font-semibold mb-2">लाभ:</h4>
+      <ul class="list-disc pl-6 space-y-1">
+        <li>पूरे शरीर की पेशियों को सशक्त बनाता है।</li>
+        <li>शरीर और त्वचा को पुष्ट करता है।</li>
+        <li>बच्चों की लंबाई बढ़ाने में सहायक है।</li>
+        <li>आलस्य और सुस्ती को दूर करता है।</li>
+        <li>पेशियों को समुचित खिंचाव प्रदान करता है।</li>
+      </ul>
+
+      <div class="flex justify-between mt-6">
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+          Previous
+        </button>
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="next()">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+
+
+
+
+          <template x-if="frame.id === 'frame6'">
+  <div x-show="frame.id === 'frame6'">
+    <div class="max-w-3xl mx-auto">
+      <img
+        src="images/frame6.jpg"
+        alt="अष्टांग योग - वृक्षासन और वज्रासन"
+        class="w-full h-auto rounded-lg shadow mb-6"
+      />
+
+      <h2 class="text-2xl font-bold mb-4">Frame 6: वृक्षासन और वज्रासन</h2>
+
+      <h3 class="text-xl font-semibold mb-2">वृक्षासन</h3>
+      <p class="mb-2">
+        यह संतुलन करने का एक आसन है। इसकी स्थिति वृक्ष के समान होती है, इसलिए इसे वृक्षासन कहते हैं।
+      </p>
+
+      <h4 class="font-semibold mb-2">प्रक्रिया:</h4>
+      <ul class="list-disc pl-6 mb-4 space-y-1">
+        <li>पैर मिलाकर सीधे खड़े हों, भुजाएँ शरीर के बगल में हों और सामने देखें।</li>
+        <li>दाहिने घुटने को मोड़ें और दाहिने पैर का तलवा, जितना संभव हो सके, बाईं जांघ के अंदर रखें।</li>
+        <li>बाएँ पैर पर संतुलन बनाए रखें।</li>
+        <li>दोनों भुजाओं को सिर के ऊपर उठाकर हथेलियों को जोड़ें – नमस्कार मुद्रा में।</li>
+        <li>इसी स्थिति को 10-15 सेकंड तक बनाए रखें।</li>
+        <li>फिर धीरे से प्रारंभिक स्थिति में लौटें और यही प्रक्रिया बाएँ पैर से दोहराएँ।</li>
+      </ul>
+
+      <h4 class="font-semibold mb-2">लाभ:</h4>
+      <ul class="list-disc pl-6 mb-4 space-y-1">
+        <li>विद्यार्थियों में एकाग्रता विकसित करने में सहायक।</li>
+        <li>शरीर के संतुलन और समन्वयन में सुधार करता है।</li>
+      </ul>
+
+      <h3 class="text-xl font-semibold mb-2">वज्रासन</h3>
+      <p class="mb-2">
+        यह एकमात्र ऐसा आसन है जिसका अभ्यास भोजन लेने के तुरंत बाद किया जा सकता है।
+      </p>
+
+      <h4 class="font-semibold mb-2">प्रक्रिया:</h4>
+      <ul class="list-disc pl-6 mb-4 space-y-1">
+        <li>पैर फैलाकर बैठ जाएँ।</li>
+        <li>बाईं टाँग को मोड़ें और पैर को बाएँ नितंब के नीचे रखें।</li>
+        <li>दाहिनी टाँग को भी मोड़ें और पैर को दाहिने नितंब के नीचे रखें।</li>
+        <li>दोनों एड़ियों को इस प्रकार रखें कि वे एक-दूसरे के ऊपर रहें।</li>
+        <li>नितंब को एड़ियों के बीच स्थित करें और मेरुदंड सीधा रखें।</li>
+        <li>हाथों को घुटनों पर रखें और आँखें बंद कर लें।</li>
+      </ul>
+
+      <h4 class="font-semibold mb-2">लाभ:</h4>
+      <ul class="list-disc pl-6 space-y-1">
+        <li>पाचन तंत्र को सुधारता है।</li>
+        <li>जांघों और पिंडलियों को मजबूत बनाता है।</li>
+      </ul>
+
+      <div class="flex justify-between mt-6">
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+          Previous
+        </button>
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="next()">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+
+
+
+          <template x-if="frame.id === 'frame7'">
+  <div x-show="frame.id === 'frame7'">
+    <div class="max-w-3xl mx-auto">
+      <img
+        src="images/frame7.jpg"
+        alt="अष्टांग योग - पवनमुक्तासन और उत्तानपादासन"
+        class="w-full h-auto rounded-lg shadow mb-6"
+      />
+
+      <h2 class="text-2xl font-bold mb-4">Frame 7: पवनमुक्तासन और उत्तानपादासन</h2>
+
+      <h3 class="text-xl font-semibold mb-2">पवनमुक्तासन</h3>
+      <p class="mb-2">
+        यह आसन पाचन और गैस की समस्या में अत्यंत लाभकारी है, इसलिए इसे पवनमुक्तासन कहा जाता है।
+      </p>
+
+      <h4 class="font-semibold mb-2">क्रिया:</h4>
+      <ul class="list-disc pl-6 mb-4 space-y-1">
+        <li>पीठ के बल लेट जाएँ, टाँगें मिली हुई और हाथ शरीर के बगल में रखें।</li>
+        <li>हथेलियाँ फर्श पर टिकाएँ।</li>
+        <li>श्वास लेते हुए दोनों टाँगों को घुटनों पर मोड़ें और फर्श पर ले आएँ।</li>
+        <li>घुटनों को हाथों से पकड़कर पेट पर दबाएँ।</li>
+        <li>श्वास छोड़ते हुए सिर उठाकर ठोड़ी को घुटनों से लगाएँ।</li>
+        <li>फिर धीरे से सिर, भुजाएँ और टाँगों को फर्श पर वापस लाएँ।</li>
+      </ul>
+
+      <h4 class="font-semibold mb-2">लाभ:</h4>
+      <ul class="list-disc pl-6 mb-4 space-y-1">
+        <li>पाचनक्रिया को सुधारता है।</li>
+        <li>कब्ज़ को दूर करने में सहायक है।</li>
+        <li>उदरीय अंगों की सक्रियता बढ़ाता है।</li>
+      </ul>
+
+      <h3 class="text-xl font-semibold mb-2">उत्तानपादासन</h3>
+      <p class="mb-2">
+        ‘उत्तान’ का अर्थ है ऊपर की ओर खिंचना और ‘पाद’ का अर्थ है पैर। इस आसन में टाँगों को ऊपर खिंचकर रखा जाता है।
+      </p>
+
+      <h4 class="font-semibold mb-2">क्रिया:</h4>
+      <ul class="list-disc pl-6 mb-4 space-y-1">
+        <li>पीठ के बल सीधे लेट जाएँ, हाथ शरीर के बगल में और हथेलियाँ नीचे की ओर रखें।</li>
+        <li>श्वास भरते हुए धीरे-धीरे दोनों टाँगों को 60 डिग्री के कोण पर उठाएँ।</li>
+        <li>इस स्थिति को 5-10 सेकंड बनाए रखें।</li>
+        <li>श्वास छोड़ते हुए धीरे-धीरे टाँगों को नीचे लाएँ और प्रारंभिक स्थिति में आएँ।</li>
+      </ul>
+
+      <h4 class="font-semibold mb-2">लाभ:</h4>
+      <ul class="list-disc pl-6 space-y-1">
+        <li>कब्ज़, अपचन और मधुमेह में लाभदायक।</li>
+        <li>नाभि मंडल को संतुलन प्रदान करता है।</li>
+        <li>स्नायु शक्ति बढ़ाता है।</li>
+      </ul>
+
+      <div class="flex justify-between mt-6">
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+          Previous
+        </button>
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="next()">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+
+
+
+         <template x-if="frame.id === 'frame8'">
+  <div x-show="frame.id === 'frame8'">
+    <div class="max-w-3xl mx-auto">
+      <img
+        src="images/frame8.jpg"
+        alt="अर्धपद्मासन और मकरासन"
+        class="w-full h-auto rounded-lg shadow mb-6"
+      />
+
+      <h2 class="text-2xl font-bold mb-4">Frame 8: अर्धपद्मासन और मकरासन</h2>
+
+      <h3 class="text-xl font-semibold mb-2">अर्धपद्मासन</h3>
+      <p class="mb-2">
+        यह एक ध्यान के लिए उपयुक्त आरामदायक आसन है जो शरीर और मन को स्थिरता प्रदान करता है।
+      </p>
+
+      <h4 class="font-semibold mb-2">क्रिया:</h4>
+      <ul class="list-disc pl-6 mb-4 space-y-1">
+        <li>टाँगों को सामने फैला कर आराम से बैठ जाएँ।</li>
+        <li>दाएँ पैर को मोड़कर उसका तलवा बाएँ जाँघ के नीचे रखें।</li>
+        <li>बाएँ पैर को मोड़कर दाएँ जाँघ के ऊपर रखें।</li>
+        <li>दोनों हाथों को अपने-अपने घुटनों पर ज्ञान मुद्रा में रखें।</li>
+        <li>इस स्थिति में जितनी देर आराम से बैठ सकें, उतनी देर तक रहें।</li>
+      </ul>
+
+      <h4 class="font-semibold mb-2">लाभ:</h4>
+      <ul class="list-disc pl-6 mb-4 space-y-1">
+        <li>श्रेणि (Pelvic) क्षेत्र में रक्त संचार बढ़ाता है।</li>
+        <li>मानसिक व शारीरिक थकान को दूर करता है।</li>
+        <li>शरीर और मस्तिष्क में संतुलन बनाता है।</li>
+      </ul>
+
+      <h3 class="text-xl font-semibold mb-2">मकरासन</h3>
+      <p class="mb-2">
+        मकरासन एक विश्रामदायक आसन है जिसकी मुद्रा मकर (मगरमच्छ) जैसी दिखाई देती है। यह विश्राम के लिए किया जाता है।
+      </p>
+
+      <h4 class="font-semibold mb-2">क्रिया:</h4>
+      <ul class="list-disc pl-6 mb-4 space-y-1">
+        <li>पेट के बल लेट जाएँ, टाँगों को थोड़ी दूरी पर रखें।</li>
+        <li>एड़ियों को अंदर और पंजों को बाहर की ओर करें।</li>
+        <li>टखनों को ज़मीन पर टिकाएँ।</li>
+        <li>भुजाओं को कोहनी से मोड़ें और सामने के कंधों को हाथों से पकड़ें।</li>
+        <li>कोहनियों को एक-दूसरे के ऊपर रखें।</li>
+        <li>सिर को हाथों पर रखें और सामान्य रूप से श्वास लेते रहें।</li>
+      </ul>
+
+      <h4 class="font-semibold mb-2">लाभ:</h4>
+      <ul class="list-disc pl-6 space-y-1">
+        <li>तनाव और चिंता को कम करता है।</li>
+        <li>श्वसन और पाचन अंगों के लिए लाभकारी है।</li>
+      </ul>
+
+      <div class="flex justify-between mt-6">
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+          Previous
+        </button>
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="next()">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+<template x-if="frame.id === 'frame9'">
+  <div x-show="frame.id === 'frame9'">
+    <div class="max-w-3xl mx-auto">
+      <img
+        src="images/frame9.jpg"
+        alt="प्राणायाम"
+        class="w-full h-auto rounded-lg shadow mb-6"
+      />
+
+      <h2 class="text-2xl font-bold mb-4">Frame 9: प्राणायाम</h2>
+
+      <p class="mb-4">
+        प्राणायाम वे श्वसन की तकनीकें हैं, जो श्वास या श्वसन प्रक्रिया के नियंत्रण से संबंधित होती हैं। 
+        यह तकनीकें श्वसन तंत्र के समन्वय को प्रभावित करती हैं और श्वास द्वारा ली गई वायु की गुणवत्ता और मात्रा को बेहतर बनाती हैं। 
+        प्राणायाम के माध्यम से व्यक्ति अपनी श्वसन दर, हृदयगति और मस्तिष्क की गतिविधियों पर नियंत्रण पा सकता है, जिससे मानसिक शांति और संतुलन प्राप्त होता है।
+      </p>
+
+      <p class="mb-4">
+        प्राणायाम के तीन प्रमुख भाग होते हैं:
+      </p>
+      <ul class="list-disc pl-6 mb-4 space-y-1">
+        <li><strong>पूरक:</strong> श्वास लेना</li>
+        <li><strong>कुम्भक:</strong> श्वास को रोककर रखना</li>
+        <li><strong>रेचक:</strong> श्वास छोड़ना</li>
+      </ul>
+
+      <h3 class="text-xl font-semibold mb-2">प्राणायाम हेतु दिशानिर्देश:</h3>
+      <ul class="list-disc pl-6 space-y-1 mb-4">
+        <li>प्राणायाम यथासंभव योगासनों के अभ्यास के बाद किया जाना चाहिए।</li>
+        <li>शीतली और शीतकारी को छोड़कर सभी प्रकार के प्राणायाम नाक से किए जाएँ।</li>
+        <li>चेहरे, आँखों, गर्दन, कंधों आदि में किसी प्रकार का तनाव नहीं होना चाहिए।</li>
+        <li>प्राणायाम करते समय आँखें बंद रखें।</li>
+        <li>श्वसन के सामान्य प्रवाह पर सजग रहें और धीरे-धीरे अभ्यास को बढ़ाएँ।</li>
+        <li>पेट की गति को देखें – श्वास भरते समय पेट बाहर, छोड़ते समय अंदर जाता है।</li>
+      </ul>
+
+      <div class="flex justify-between mt-6">
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+          Previous
+        </button>
+        <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="next()">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+          <!-- Add more frames similarly -->
+        </section>
+      </template>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div x-html="footer"></div>
+
+  <!-- Alpine Component -->
+  <script>
+    function presentation() {
+      return {
+        header: "",
+        footer: "",
+        sidebar: "",
+        frames: Array.from({ length: 21 }, (_, i) => ({ id: `frame${i + 1}` })),
+        active: "frame1",
+
+        setActive(id) {
+          if (this.frames.some(f => f.id === id)) {
+            this.active = id;
+            window.location.hash = id;
+          }
+        },
+
+        next() {
+          const idx = this.frames.findIndex(f => f.id === this.active);
+          if (idx < this.frames.length - 1) {
+            this.setActive(this.frames[idx + 1].id);
+          }
+        },
+
+        prev() {
+          const idx = this.frames.findIndex(f => f.id === this.active);
+          if (idx > 0) {
+            this.setActive(this.frames[idx - 1].id);
+          }
+        },
+
+        goTo(id) {
+          this.setActive(id);
+        },
+
+        async init() {
+          try {
+            const [header, footer, sidebar] = await Promise.all([
+              fetch("partials/header.html").then(r => r.text()),
+              fetch("partials/footer.html").then(r => r.text()),
+              fetch("partials/sidebar.html").then(r => r.text()),
+            ]);
+            this.header = header;
+            this.footer = footer;
+            this.sidebar = sidebar;
+
+            // Set active frame from URL hash on load
+            const hash = window.location.hash.replace("#", "");
+            if (this.frames.some(f => f.id === hash)) {
+              this.active = hash;
+            } else {
+              window.location.hash = this.active;
+            }
+
+            // Listen for hash changes
+            window.addEventListener("hashchange", () => {
+              const newHash = window.location.hash.replace("#", "");
+              if (this.frames.some(f => f.id === newHash)) {
+                this.active = newHash;
+              }
+            });
+          } catch (error) {
+            console.error("Error loading partials:", error);
+          }
+        }
+      };
+    }
+  </script>
+</body>
+</html>
