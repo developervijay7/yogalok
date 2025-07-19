@@ -12,9 +12,11 @@
   <div x-html="header"></div>
 
   <!-- Main Content Area -->
-  <div class="flex flex-1 relative">
+  <div class="flex flex-1 flex-col md:flex-row relative">
+    <!-- Mobile Sidebar Toggle -->
+    <button @click="sidebarOpen = !sidebarOpen" class="md:hidden p-2 bg-blue-100 text-blue-700 rounded shadow mb-2 ml-2 mt-2 w-32 self-start z-50">स्लाइड्स मेनू</button>
     <!-- Sidebar -->
-    <aside class="w-64 bg-gray-100 p-4 overflow-y-auto" x-html="sidebar"></aside>
+    <aside :class="sidebarOpen ? 'block' : 'hidden'" class="w-full md:w-64 bg-gray-100 p-4 overflow-y-auto md:block md:relative fixed top-16 left-0 h-full z-40 md:z-auto transition-all duration-300" x-html="sidebar"></aside>
 
     <!-- Slides -->
     <main class="flex-1 relative overflow-y-auto">
@@ -27,7 +29,7 @@
           x-transition:leave="transition transform duration-300 absolute"
           x-transition:leave-start="translate-x-0 opacity-100"
           x-transition:leave-end="-translate-x-full opacity-0"
-          class="absolute top-0 left-0 w-full p-6 bg-white z-10"
+          class="absolute top-0 left-0 w-full p-2 sm:p-4 md:p-6 bg-white z-10"
           :id="frame.id"
         >
          <template x-if="frame.id === 'frame1'">
@@ -586,12 +588,14 @@
         sidebar: "",
         frames: Array.from({ length: 21 }, (_, i) => ({ id: `frame${i + 1}` })),
         active: "frame1",
+        sidebarOpen: false,
 
         setActive(id) {
           if (this.frames.some(f => f.id === id)) {
             this.active = id;
             window.location.hash = id;
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.innerWidth < 768) this.sidebarOpen = false;
           }
         },
 
