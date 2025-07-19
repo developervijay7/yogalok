@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yoga Teacher Training - Presentation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs"></script>
+</head>
+<body class="flex flex-col min-h-screen" x-data="presentation()" x-init="init()">
+  <!-- Header -->
+  <div x-html="header"></div>
+
+  <!-- Main Content Area -->
+  <div class="flex flex-1 relative">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-100 p-4 overflow-y-auto" x-html="sidebar"></aside>
+
+    <!-- Slides -->
+    <main class="flex-1 relative overflow-y-auto">
+      <template x-for="(frame, index) in frames" :key="frame.id">
+        <section
+          x-show="active === frame.id"
+          x-transition:enter="transition transform duration-500"
+          x-transition:enter-start="translate-x-full opacity-0"
+          x-transition:enter-end="translate-x-0 opacity-100"
+          x-transition:leave="transition transform duration-300 absolute"
+          x-transition:leave-start="translate-x-0 opacity-100"
+          x-transition:leave-end="-translate-x-full opacity-0"
+          class="absolute top-0 left-0 w-full p-6 bg-white z-10"
+          :id="frame.id"
+        >
+          <div x-show="frame.id === 'frame1'">
+            <div>
+                <h2 class="text-2xl font-bold mb-4">योग का प्रथम अंग 'यम'</h2>
+                <p class="mb-4">
+                  यम 'योग के आठ अंगों' में से पहला अंग हैं, जिसकी उत्पत्ति
+                  प्राचीन भारतीय दार्शनिक ग्रंथ 'पतंजलि के योग सूत्र' से हुई है।
+                  प्रत्येक अंग योग अभ्यास के एक विशेष पहलू का वर्णन करता है, जो
+                  सभी मुक्ति और ज्ञान की ओर ले जाते हैं।
+                </p>
+                <p class="mb-4">
+                  योग-दर्शन के पातंजलि सूत्र 30 में यम के सम्बन्ध में बताया गया
+                  है-<br />
+                  अहिंसा सत्‍यास्तेय ब्रह्मचर्यापरिग्रहा यमाः। अर्थात् अहिंसा,
+                  सत्य, अस्तेय, ब्रह्मचर्य और अपरिग्रह यह पंच यम हैं। इनकी
+                  उपर्युक्त पाँच शब्दों से परिभाषा की गई है। इस पंचयम समूह का
+                  नाम यम रखा गया है। यम शब्द से तात्पर्य पंच यमों की भावना से भी
+                  है। क्रमशः प्रत्येक के बारे में कुछ विवेचना की जाती है।
+                </p>
+                <h3 class="text-xl font-semibold mb-2">1. अहिंसा</h3>
+                <p class="mb-4">
+                  अहिंसा का अर्थ है किसी भी प्राणी को न सताना। दूसरों को शारीरिक
+                  रूप से, मानसिक रूप से या प्रकृति को भौतिक रूप से नुक़सान न
+                  पहुँचाना; दूसरों या खुद के बारे में नकारात्मक विचार न रखना; और
+                  यह सुनिश्चित करना कि हम जो करते हैं और जिस तरह से करते हैं वह
+                  सद्भावनापूर्ण हो, न कि नुकसान पहुँचाने वाला हो।
+                </p>
+                <h3 class="text-xl font-semibold mb-2">2. सत्य</h3>
+                <p>
+                  सत्य का अर्थ है सच्चाई, लेकिन यह सिर्फ़ सच बोलने से कहीं
+                  ज़्यादा है। 'सत्य' शब्द का शाब्दिक अर्थ है 'सच्चा सार' या
+                  'अपरिवर्तनीय'। हमारे विचार, भावनाएँ और मनोदशाएँ एक दूसरे से
+                  बदली जा सकती हैं, फिर भी वे ऐसी चीज़ें हैं जो हमारा अपना सत्य
+                  बनाती हैं। योग में सत्य थोड़ी सी झूठ बनाने पर काम करता है ताकि
+                  हम महसूस कर सकें कि हम सिर्फ़ अपने विचार नहीं हैं।
+                </p>
+                <div class="flex justify-between mt-6">
+                  <button class="px-4 py-2 bg-gray-300 rounded" disabled>
+                    Previous
+                  </button>
+                  <button
+                    class="px-4 py-2 bg-blue-500 text-white rounded"
+                    @click="next()"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+          </div>
+
+          <div x-show="frame.id === 'frame2'">
+            <h2 class="text-2xl font-bold mb-4">Frame 2 Content</h2>
+            <div>
+                <h3 class="text-xl font-semibold mb-2">
+                  3. अस्तेय (चोरी न करना)
+                </h3>
+                <p class="mb-4">
+                  अस्तेय का अर्थ है 'चोरी न करना', लेकिन अन्य यम और नियमों की
+                  तरह, इसका अर्थ इससे कहीं अधिक है। यह वृत्ति अन्तः (मन के
+                  विचार/उत्तर-चयन) से उत्पन्न होती है - "मैं पर्याप्त अच्छा नहीं
+                  हूँ" या "मेरे पास पर्याप्त नहीं है"। यह खुद पर विश्वास की कमी
+                  से उत्पन्न होती है। 'yog' शब्द का अर्थ है 'जोड़ना', 'एकत्र
+                  होना', 'जुटाना', या भावनात्मक रूप से संपूर्ण बनना। यह न केवल
+                  धन या वस्तुओं की चोरी से रोकता है, बल्कि दूसरों के विचार, समय
+                  या अधिकारों का अनुचित उपयोग करने से भी मना करता है। अस्तेय का
+                  पालन करने से मन शुद्ध होता है और समाज में विश्वास बढ़ता है।
+                </p>
+
+                <h3 class="text-xl font-semibold mb-2">
+                  4. ब्रह्मचर्य (इन्द्रियों का संयम / ऊर्जा का सही उपयोग)
+                </h3>
+                <p class="mb-4">
+                  ब्रह्मचर्य शब्द आमतौर पर 'ब्रह्मचर्य' के रूप में लिया जाता है।
+                  इसे इसलिए अक्सर हमारी आधुनिक संस्कृति में अप्रासंगिक माना जाता
+                  है। ब्रह्मचर्य शब्द का मतलब है ‘ऐसा व्यवहार जो ब्रह्म की ओर ले
+                  जाता है’। हिंदू धर्म और योगिक शब्दों में ब्रह्म को सृष्टि का
+                  निर्माता माना जाता है। इसलिए ब्रह्मचर्य को 'ऊर्जा के सही
+                  उपयोग' के रूप में देखा जा सकता है। इसका मतलब है अपनी ऊर्जा को
+                  बाहरी इच्छाओं से दूर रखना और इसके बजाय, अपनी भीतर शांति और
+                  खुशी पाने की दिशा में निर्देशित करना।
+                </p>
+
+                <h3 class="text-xl font-semibold mb-2">
+                  5. अपरिग्रह (लालच न करना)
+                </h3>
+                <p class="mb-4">
+                  अपरिग्रह - 'गैर-लोभ', 'गैर-स्वामित्व' और 'गैर-आसक्ति'। यह
+                  महत्वपूर्ण यम हमें सिखाता है कि हमें केवल वही लेना चाहिए जिसकी
+                  हमें आवश्यकता है, केवल वही रखना चाहिए जो इस समय हमारे काम आ
+                  रहा है और जब सही समय हो तो उसे छोड़ देना चाहिए।
+                </p>
+            <div class="flex justify-between mt-6">
+                  <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+                    Previous
+                  </button>
+                  <button
+                    class="px-4 py-2 bg-blue-500 text-white rounded"
+                    @click="next()"
+                  >
+                    Next
+                  </button>
+                </div>
+          </div>
+
+
+          <div x-show="frame.id === 'frame3'">
+            <h2 class="text-2xl font-bold mb-4">Frame 3 Content</h2>
+            <div>
+                
+            
+            <div class="flex justify-between mt-6">
+                  <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+                    Previous
+                  </button>
+                  <button
+                    class="px-4 py-2 bg-blue-500 text-white rounded"
+                    @click="next()"
+                  >
+                    Next
+                  </button>
+                </div>
+          </div>
+
+
+
+
+          <div x-show="frame.id === 'frame4'">
+            <h2 class="text-2xl font-bold mb-4">Frame 4 Content</h2>
+            <div>
+                
+            
+            <div class="flex justify-between mt-6">
+                  <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+                    Previous
+                  </button>
+                  <button
+                    class="px-4 py-2 bg-blue-500 text-white rounded"
+                    @click="next()"
+                  >
+                    Next
+                  </button>
+                </div>
+          </div>
+
+
+
+
+
+          <div x-show="frame.id === 'frame5'">
+            <h2 class="text-2xl font-bold mb-4">Frame 5 Content</h2>
+            <div>
+                
+            
+            <div class="flex justify-between mt-6">
+                  <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+                    Previous
+                  </button>
+                  <button
+                    class="px-4 py-2 bg-blue-500 text-white rounded"
+                    @click="next()"
+                  >
+                    Next
+                  </button>
+                </div>
+          </div>
+
+
+
+
+
+
+          <div x-show="frame.id === 'frame6'">
+            <h2 class="text-2xl font-bold mb-4">Frame 6 Content</h2>
+            <div>
+                
+            
+            <div class="flex justify-between mt-6">
+                  <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+                    Previous
+                  </button>
+                  <button
+                    class="px-4 py-2 bg-blue-500 text-white rounded"
+                    @click="next()"
+                  >
+                    Next
+                  </button>
+                </div>
+          </div>
+
+
+
+
+
+          <div x-show="frame.id === 'frame7'">
+            <h2 class="text-2xl font-bold mb-4">Frame 7 Content</h2>
+            <div>
+                
+            
+            <div class="flex justify-between mt-6">
+                  <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+                    Previous
+                  </button>
+                  <button
+                    class="px-4 py-2 bg-blue-500 text-white rounded"
+                    @click="next()"
+                  >
+                    Next
+                  </button>
+                </div>
+          </div>
+
+
+
+
+
+
+          <div x-show="frame.id === 'frame8'">
+            <h2 class="text-2xl font-bold mb-4">Frame 8 Content</h2>
+            <div>
+                
+            
+            <div class="flex justify-between mt-6">
+                  <button class="px-4 py-2 bg-blue-500 text-white rounded" @click="prev()">
+                    Previous
+                  </button>
+                  <button
+                    class="px-4 py-2 bg-blue-500 text-white rounded"
+                    @click="next()"
+                  >
+                    Next
+                  </button>
+                </div>
+          </div>
+
+          <!-- Add more frames similarly -->
+        </section>
+      </template>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div x-html="footer"></div>
+
+  <!-- Alpine Component -->
+  <script>
+    function presentation() {
+      return {
+        header: "",
+        footer: "",
+        sidebar: "",
+        frames: Array.from({ length: 21 }, (_, i) => ({ id: `frame${i + 1}` })),
+        active: "frame1",
+
+        setActive(id) {
+          if (this.frames.some(f => f.id === id)) {
+            this.active = id;
+            window.location.hash = id;
+          }
+        },
+
+        next() {
+          const idx = this.frames.findIndex(f => f.id === this.active);
+          if (idx < this.frames.length - 1) {
+            this.setActive(this.frames[idx + 1].id);
+          }
+        },
+
+        prev() {
+          const idx = this.frames.findIndex(f => f.id === this.active);
+          if (idx > 0) {
+            this.setActive(this.frames[idx - 1].id);
+          }
+        },
+
+        goTo(id) {
+          this.setActive(id);
+        },
+
+        async init() {
+          try {
+            const [header, footer, sidebar] = await Promise.all([
+              fetch("partials/header.html").then(r => r.text()),
+              fetch("partials/footer.html").then(r => r.text()),
+              fetch("partials/sidebar.html").then(r => r.text()),
+            ]);
+            this.header = header;
+            this.footer = footer;
+            this.sidebar = sidebar;
+
+            // Set active frame from URL hash on load
+            const hash = window.location.hash.replace("#", "");
+            if (this.frames.some(f => f.id === hash)) {
+              this.active = hash;
+            } else {
+              window.location.hash = this.active;
+            }
+
+            // Listen for hash changes
+            window.addEventListener("hashchange", () => {
+              const newHash = window.location.hash.replace("#", "");
+              if (this.frames.some(f => f.id === newHash)) {
+                this.active = newHash;
+              }
+            });
+          } catch (error) {
+            console.error("Error loading partials:", error);
+          }
+        }
+      };
+    }
+  </script>
+</body>
+</html>

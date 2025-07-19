@@ -147,7 +147,7 @@
       <img
         src="images/frame3.jpg"
         alt="अष्टांग योग के नियम"
-        class="w-full h-auto rounded-lg shadow mb-6"
+        class="w-full h-64 object-cover rounded-lg shadow mb-6"
       />
 
       <h2 class="text-2xl font-bold mb-4">Frame 3: अष्टांग योग के नियम (Niyama in Ashtanga Yoga)</h2>
@@ -206,7 +206,7 @@
       <img
         src="images/frame4.jpg"
         alt="अष्टांग योग नियम - संतोष से ईश्वर प्राणिधान"
-        class="w-full h-auto rounded-lg shadow mb-6"
+        class="w-full h-64 object-cover rounded-lg shadow mb-6"
       />
 
       <h2 class="text-2xl font-bold mb-4">Frame 4: अष्टांग योग के नियम (Santosha से Ishwar Pranidhana)</h2>
@@ -254,7 +254,7 @@
       <img
         src="images/frame5.jpg"
         alt="अष्टांग योग - आसन"
-        class="w-full h-auto rounded-lg shadow mb-6"
+        class="w-full h-64 object-cover rounded-lg shadow mb-6"
       />
 
       <h2 class="text-2xl font-bold mb-4">Frame 5: अष्टांग योग का तीसरा अंग – आसन</h2>
@@ -591,6 +591,7 @@
           if (this.frames.some(f => f.id === id)) {
             this.active = id;
             window.location.hash = id;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }
         },
 
