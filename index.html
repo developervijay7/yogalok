@@ -45,18 +45,17 @@
                                        :value="opt"
                                        x-model="answers[q.id]"
                                        class="mr-2"
-                                       :disabled="submitted">
+                                       :disabled="q.locked"
+                                       @change="autoSubmit(q)">
                                 <span x-text="q[opt]"></span>
                             </label>
                         </template>
 
-                        <!-- Show feedback for selected option -->
-                        <template x-if="submitted && answers[q.id]">
+                        <!-- Show feedback -->
+                        <template x-if="q.locked && answers[q.id]">
                             <p class="mt-2 text-sm"
                                :class="answers[q.id] === q.correct ? 'text-green-700' : 'text-red-600'">
-                                <span
-                                        x-text="q['context' + answers[q.id].slice(-1)]">
-                                </span>
+                                <span x-text="q['context' + answers[q.id].slice(-1)]"></span>
                             </p>
                         </template>
                     </div>
@@ -64,15 +63,9 @@
 
                 <!-- Buttons -->
                 <div class="flex space-x-3 mt-6">
-                    <button @click="submitFrame(frame.id)"
-                            class="bg-green-600 text-white px-4 py-2 rounded-lg"
-                            :disabled="submitted">
-                        Submit
-                    </button>
-
                     <button @click="nextFrame()"
                             class="bg-blue-600 text-white px-4 py-2 rounded-lg"
-                            :disabled="!submitted">
+                            :disabled="!allAnswered(frame.id)">
                         Next Frame
                     </button>
                 </div>
@@ -102,7 +95,6 @@
             questions: [],
             answers: {},
             activeFrame: 1,
-            submitted: false,
             phase: 'content',
             completed: false,
             frameContent: "",
@@ -115,6 +107,7 @@
                 const res = await fetch('questions.json');
                 this.questions = await res.json();
                 this.totalQuestions = this.questions.length;
+                this.questions.forEach(q => q.locked = false); // add lock flag
                 this.loadFrameContent();
             },
 
@@ -128,7 +121,7 @@
             },
 
             getOptionClass(q, opt) {
-                if (!this.submitted) return 'hover:bg-gray-100 rounded px-2 py-1';
+                if (!q.locked) return 'hover:bg-gray-100 rounded px-2 py-1';
                 if (q.correct === opt) return 'bg-green-100 text-green-800 font-semibold rounded px-2 py-1';
                 if (this.answers[q.id] === opt && this.answers[q.id] !== q.correct) {
                     return 'bg-red-100 text-red-800 font-semibold rounded px-2 py-1';
@@ -136,29 +129,27 @@
                 return 'opacity-70 px-2 py-1';
             },
 
-            submitFrame(frameId) {
-                if (this.submitted) return;
+            autoSubmit(q) {
+                if (q.locked) return;
+                if (!this.answers[q.id]) return;
 
-                let frameQs = this.getQuestions(frameId);
-                let allAnswered = frameQs.every(q => this.answers[q.id]);
-                if (!allAnswered) {
-                    alert("❗ कृपया सभी प्रश्नों के उत्तर दें (Please answer all questions before submitting).");
-                    return;
+                // Check correctness
+                if (this.answers[q.id] === q.correct) {
+                    this.correctCount++;
+                } else {
+                    this.wrongCount++;
                 }
 
-                frameQs.forEach(q => {
-                    if (this.answers[q.id] === q.correct) {
-                        this.correctCount++;
-                    } else {
-                        this.wrongCount++;
-                    }
-                });
+                // Lock this question
+                q.locked = true;
+            },
 
-                this.submitted = true;
+            allAnswered(frameId) {
+                let frameQs = this.getQuestions(frameId);
+                return frameQs.every(q => q.locked);
             },
 
             async nextFrame() {
-                this.submitted = false;
                 this.phase = 'content';
 
                 if (this.activeFrame < this.frames.length) {
