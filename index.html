@@ -122,11 +122,13 @@
 
             getOptionClass(q, opt) {
                 if (!q.locked) return 'hover:bg-gray-100 rounded px-2 py-1';
-                if (q.correct === opt) return 'bg-green-100 text-green-800 font-semibold rounded px-2 py-1';
+
+                // ❌ Do not highlight correct answer
                 if (this.answers[q.id] === opt && this.answers[q.id] !== q.correct) {
                     return 'bg-red-100 text-red-800 font-semibold rounded px-2 py-1';
                 }
-                return 'opacity-70 px-2 py-1';
+
+                return 'opacity-70 px-2 py-1'; // faded for all other options
             },
 
             autoSubmit(q) {
