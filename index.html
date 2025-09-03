@@ -37,6 +37,7 @@
                     <div class="mb-6 border-b pb-4">
                         <p class="font-semibold mb-2" x-text="q.question"></p>
 
+                        <!-- Options -->
                         <template x-for="opt in ['ans1','ans2','ans3','ans4']">
                             <label class="block cursor-pointer" :class="getOptionClass(q, opt)">
                                 <input type="radio"
@@ -44,14 +45,14 @@
                                        :value="opt"
                                        x-model="answers[q.id]"
                                        class="mr-2"
-                                       :disabled="submitted">
+                                       :disabled="submitted[q.id]"
+                                       @change="autoSubmit(q)">
                                 <span x-text="q[opt]"></span>
                             </label>
                         </template>
 
                         <!-- Show feedback -->
-                        <!-- Show feedback -->
-                        <template x-if="submitted">
+                        <template x-if="submitted[q.id]">
                             <p class="mt-2 text-sm"
                                :class="answers[q.id] === q.correct ? 'text-green-700' : 'text-red-600'">
                                 <span x-text="q['context' + answers[q.id].slice(-1)]"></span>
@@ -60,17 +61,10 @@
                     </div>
                 </template>
 
-                <!-- Buttons -->
-                <div class="flex space-x-3 mt-6">
-                    <button @click="submitFrame(frame.id)"
-                            class="bg-green-600 text-white px-4 py-2 rounded-lg"
-                            :disabled="submitted">
-                        Submit
-                    </button>
-
+                <!-- Navigation -->
+                <div class="flex justify-end mt-6">
                     <button @click="nextFrame()"
-                            class="bg-blue-600 text-white px-4 py-2 rounded-lg"
-                            :disabled="!submitted">
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg">
                         Next Frame
                     </button>
                 </div>
@@ -99,8 +93,8 @@
             frames: Array.from({length: 21}, (_, i) => ({id: i + 1})),
             questions: [],
             answers: {},
+            submitted: {}, // track per-question submissions
             activeFrame: 1,
-            submitted: false,
             phase: 'content',
             completed: false,
             frameContent: "",
@@ -126,7 +120,7 @@
             },
 
             getOptionClass(q, opt) {
-                if (!this.submitted) return 'hover:bg-gray-100 rounded px-2 py-1';
+                if (!this.submitted[q.id]) return 'hover:bg-gray-100 rounded px-2 py-1';
                 if (q.correct === opt) return 'bg-green-100 text-green-800 font-semibold rounded px-2 py-1';
                 if (this.answers[q.id] === opt && this.answers[q.id] !== q.correct) {
                     return 'bg-red-100 text-red-800 font-semibold rounded px-2 py-1';
@@ -134,31 +128,20 @@
                 return 'opacity-70 px-2 py-1';
             },
 
-            submitFrame(frameId) {
-                if (this.submitted) return;
+            autoSubmit(q) {
+                if (this.submitted[q.id]) return;
 
-                let frameQs = this.getQuestions(frameId);
-                let allAnswered = frameQs.every(q => this.answers[q.id]);
-                if (!allAnswered) {
-                    alert("❗ कृपया सभी प्रश्नों के उत्तर दें (Please answer all questions before submitting).");
-                    return;
+                if (this.answers[q.id] === q.correct) {
+                    this.correctCount++;
+                } else {
+                    this.wrongCount++;
                 }
 
-                frameQs.forEach(q => {
-                    if (this.answers[q.id] === q.correct) {
-                        this.correctCount++;
-                    } else {
-                        this.wrongCount++;
-                    }
-                });
-
-                this.submitted = true;
+                this.submitted[q.id] = true;
             },
 
             async nextFrame() {
-                this.submitted = false;
                 this.phase = 'content';
-
                 if (this.activeFrame < this.frames.length) {
                     this.activeFrame++;
                     await this.loadFrameContent();
