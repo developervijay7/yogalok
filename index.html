@@ -63,9 +63,16 @@
 
                 <!-- Buttons -->
                 <div class="flex space-x-3 mt-6">
+                    <!-- Reset Wrong Answers -->
+                    <button @click="resetWrongAnswers(frame.id)"
+                            class="bg-yellow-500 text-white px-4 py-2 rounded-lg">
+                        Reset Wrong Answers
+                    </button>
+
+                    <!-- Next Frame (only if all correct) -->
                     <button @click="nextFrame()"
                             class="bg-blue-600 text-white px-4 py-2 rounded-lg"
-                            :disabled="!allAnswered(frame.id)">
+                            :disabled="!allCorrect(frame.id)">
                         Next Frame
                     </button>
                 </div>
@@ -138,17 +145,29 @@
                 // Check correctness
                 if (this.answers[q.id] === q.correct) {
                     this.correctCount++;
+                    q.locked = true; // lock if correct
                 } else {
                     this.wrongCount++;
+                    q.locked = true; // lock wrong as well
                 }
-
-                // Lock this question
-                q.locked = true;
             },
 
-            allAnswered(frameId) {
+            resetWrongAnswers(frameId) {
                 let frameQs = this.getQuestions(frameId);
-                return frameQs.every(q => q.locked);
+
+                frameQs.forEach(q => {
+                    if (q.locked && this.answers[q.id] !== q.correct) {
+                        // reset wrong answers only
+                        this.answers[q.id] = null;
+                        q.locked = false;
+                        this.wrongCount = Math.max(0, this.wrongCount - 1); // adjust wrong count
+                    }
+                });
+            },
+
+            allCorrect(frameId) {
+                let frameQs = this.getQuestions(frameId);
+                return frameQs.every(q => this.answers[q.id] === q.correct);
             },
 
             async nextFrame() {
