@@ -50,16 +50,11 @@
                         </template>
 
                         <!-- Show feedback -->
+                        <!-- Show feedback -->
                         <template x-if="submitted">
                             <p class="mt-2 text-sm"
                                :class="answers[q.id] === q.correct ? 'text-green-700' : 'text-red-600'">
-                                <template x-if="answers[q.id] === q.correct">
-                                    ✔ सही उत्तर दिया आपने!
-                                </template>
-                                <template x-if="answers[q.id] !== q.correct">
-                                    ❌ गलत चुना, सही उत्तर है:
-                                    <span class="font-bold" x-text="q[q.correct]"></span>
-                                </template>
+                                <span x-text="q['context' + answers[q.id].slice(-1)]"></span>
                             </p>
                         </template>
                     </div>
