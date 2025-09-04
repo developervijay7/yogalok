@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" x-data="darkMode()" x-init="init()" :class="{ 'dark': isDark }">
 <head>
     <meta charset="UTF-8" />
     <title>Yoga Quiz Frames</title>
@@ -7,6 +7,28 @@
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 p-4 sm:p-6 transition-colors duration-300">
+
+<!-- Top bar with Dark Mode Switch -->
+<header class="flex justify-between items-center max-w-4xl mx-auto mb-6">
+    <h1 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">🧘 Yoga Quiz</h1>
+    <button @click="toggle()"
+            class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:scale-110 transition"
+            x-tooltip="Toggle Dark Mode">
+        <!-- Sun Icon -->
+        <svg x-show="!isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 3v1m0 16v1m8.66-12.66l-.71.71M5.05 18.95l-.71.71M21 12h-1M4 12H3m15.95 6.95l-.71-.71M6.34 6.34l-.71-.71M12 5a7 7 0 100 14 7 7 0 000-14z"/>
+        </svg>
+        <!-- Moon Icon -->
+        <svg x-show="isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-200" fill="currentColor"
+             viewBox="0 0 24 24">
+            <path
+                    d="M21.752 15.002A9.718 9.718 0 0112 21.75 9.75 9.75 0 1112 3a9.718 9.718 0 019.752 12.002z" />
+        </svg>
+    </button>
+</header>
+
 <div x-data="quizApp()" x-init="loadQuestions()"
      class="max-w-4xl mx-auto space-y-6">
 
@@ -67,13 +89,10 @@
 
                 <!-- Buttons -->
                 <div class="flex flex-col sm:flex-row gap-3 mt-6">
-                    <!-- Reset Wrong Answers -->
                     <button @click="resetWrongAnswers(frame.id)"
                             class="flex-1 sm:flex-none bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition">
                         Reset Wrong Answers
                     </button>
-
-                    <!-- Next Frame (only if all correct) -->
                     <button @click="nextFrame()"
                             class="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition disabled:opacity-50"
                             :disabled="!allCorrect(frame.id)">
@@ -104,7 +123,6 @@
 <footer class="mt-10 text-center text-gray-600 dark:text-gray-400 text-sm">
     <p class="flex items-center justify-center space-x-2">
         <span>Developed with</span>
-        <!-- Animated red heart -->
         <svg class="w-5 h-5 text-red-600 animate-pulse" xmlns="http://www.w3.org/2000/svg"
              viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd"
@@ -112,11 +130,30 @@
                      4 0 115.656 5.656L10 18.657l-6.828-6.829a4
                      4 0 010-5.656z" clip-rule="evenodd" />
         </svg>
-        <span>by <a href="https://vijaygoswami.com" target="_blank" class="underline hover:text-blue-600 dark:hover:text-blue-400">Vijay Goswami</a> &amp;
-        <a href="https://attrixtech.com" target="_blank" class="underline hover:text-blue-600 dark:hover:text-blue-400">Attrix Technologies</a></span>
+        <span>by <a href="https://vijaygoswami.com" target="_blank"
+                    class="underline hover:text-blue-600 dark:hover:text-blue-400">Vijay Goswami</a> &amp;
+        <a href="https://attrixtech.com" target="_blank"
+           class="underline hover:text-blue-600 dark:hover:text-blue-400">Attrix Technologies</a></span>
     </p>
 </footer>
+
 <script>
+    // 🌙 Dark Mode Controller
+    function darkMode() {
+        return {
+            isDark: false,
+            init() {
+                this.isDark = localStorage.getItem('darkMode') === 'true' ||
+                    (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            },
+            toggle() {
+                this.isDark = !this.isDark;
+                localStorage.setItem('darkMode', this.isDark);
+            }
+        }
+    }
+
+    // 🧩 Quiz App Logic
     function quizApp() {
         return {
             frames: Array.from({length: 21}, (_, i) => ({id: i + 1})),
@@ -126,7 +163,6 @@
             phase: 'content',
             completed: false,
             frameContent: "",
-
             correctCount: 0,
             wrongCount: 0,
             totalQuestions: 0,
@@ -137,13 +173,11 @@
                 this.totalQuestions = this.questions.length;
                 this.questions.forEach(q => q.locked = false);
 
-                // 👇 Parse URL param
                 const params = new URLSearchParams(window.location.search);
                 const frameParam = parseInt(params.get('frame'));
                 if (frameParam && frameParam >= 1 && frameParam <= this.frames.length) {
                     this.activeFrame = frameParam;
                 }
-
                 this.loadFrameContent();
             },
 
@@ -151,12 +185,9 @@
                 try {
                     let res = await fetch(`frames/frame${this.activeFrame}.html`);
                     this.frameContent = await res.text();
-
-                    // 👇 Update URL without reloading
                     const url = new URL(window.location);
                     url.searchParams.set("frame", this.activeFrame);
                     window.history.replaceState({}, "", url);
-
                 } catch (e) {
                     console.error("Error loading frame:", e);
                     this.frameContent = `<p class="text-red-600">Frame ${this.activeFrame} could not be loaded.</p>`;
@@ -168,19 +199,16 @@
             },
 
             getOptionClass(q, opt) {
-                if (!q.locked) return 'hover:bg-gray-100 rounded px-2 py-1';
-
+                if (!q.locked) return 'hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2 py-1';
                 if (this.answers[q.id] === opt && this.answers[q.id] !== q.correct) {
                     return 'bg-red-100 text-red-800 font-semibold rounded px-2 py-1';
                 }
-
                 return 'opacity-70 px-2 py-1';
             },
 
             autoSubmit(q) {
                 if (q.locked) return;
                 if (!this.answers[q.id]) return;
-
                 if (this.answers[q.id] === q.correct) {
                     this.correctCount++;
                 } else {
@@ -191,7 +219,6 @@
 
             resetWrongAnswers(frameId) {
                 let frameQs = this.getQuestions(frameId);
-
                 frameQs.forEach(q => {
                     if (q.locked && this.answers[q.id] !== q.correct) {
                         this.answers[q.id] = null;
@@ -208,7 +235,6 @@
 
             async nextFrame() {
                 this.phase = 'content';
-
                 if (this.activeFrame < this.frames.length) {
                     this.activeFrame++;
                     await this.loadFrameContent();
@@ -219,6 +245,5 @@
         }
     }
 </script>
-
 </body>
 </html>
