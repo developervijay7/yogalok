@@ -6,40 +6,44 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
-<body class="bg-gray-100 p-6">
-<div x-data="quizApp()" x-init="loadQuestions()" class="max-w-4xl mx-auto">
+<body class="bg-gray-100 dark:bg-gray-900 p-4 sm:p-6 transition-colors duration-300">
+<div x-data="quizApp()" x-init="loadQuestions()"
+     class="max-w-4xl mx-auto space-y-6">
 
     <!-- Frames Loop -->
     <template x-for="frame in frames" :key="frame.id">
         <div x-show="activeFrame === frame.id && !completed"
-             class="bg-white p-6 rounded-xl shadow-md">
+             class="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-xl shadow-md transition-colors duration-300">
 
             <!-- STEP 1: Frame Content -->
             <div x-show="phase === 'content'">
-                <h2 class="text-xl font-bold mb-4">📖 Frame <span x-text="frame.id"></span></h2>
+                <h2 class="text-lg sm:text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+                    📖 Frame <span x-text="frame.id"></span>
+                </h2>
 
                 <!-- Frame Content Loaded Dynamically -->
-                <div x-html="frameContent"></div>
+                <div x-html="frameContent" class="text-gray-700 dark:text-gray-300"></div>
 
                 <button @click="phase = 'questions'"
-                        class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg">
+                        class="mt-4 w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
                     Next: Questions
                 </button>
             </div>
 
             <!-- STEP 2: Frame Questions -->
             <div x-show="phase === 'questions'">
-                <h3 class="text-lg font-semibold mb-4">
+                <h3 class="text-base sm:text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
                     Questions for Frame <span x-text="frame.id"></span>
                 </h3>
 
                 <template x-for="q in getQuestions(frame.id)" :key="q.id">
-                    <div class="mb-6 border-b pb-4">
-                        <p class="font-semibold mb-2" x-text="q.question"></p>
+                    <div class="mb-6 border-b pb-4 border-gray-200 dark:border-gray-700">
+                        <p class="font-semibold mb-2 text-gray-800 dark:text-gray-200" x-text="q.question"></p>
 
                         <!-- Options -->
                         <template x-for="opt in ['ans1','ans2','ans3','ans4']">
-                            <label class="block cursor-pointer" :class="getOptionClass(q, opt)">
+                            <label class="block cursor-pointer p-2 rounded-lg mb-1 transition"
+                                   :class="getOptionClass(q, opt)">
                                 <input type="radio"
                                        :name="'q-'+q.id"
                                        :value="opt"
@@ -47,14 +51,14 @@
                                        class="mr-2"
                                        :disabled="q.locked"
                                        @change="autoSubmit(q)">
-                                <span x-text="q[opt]"></span>
+                                <span class="text-gray-700 dark:text-gray-300" x-text="q[opt]"></span>
                             </label>
                         </template>
 
                         <!-- Show feedback -->
                         <template x-if="q.locked && answers[q.id]">
                             <p class="mt-2 text-sm"
-                               :class="answers[q.id] === q.correct ? 'text-green-700' : 'text-red-600'">
+                               :class="answers[q.id] === q.correct ? 'text-green-600' : 'text-red-500'">
                                 <span x-text="q['context' + answers[q.id].slice(-1)]"></span>
                             </p>
                         </template>
@@ -62,16 +66,16 @@
                 </template>
 
                 <!-- Buttons -->
-                <div class="flex space-x-3 mt-6">
+                <div class="flex flex-col sm:flex-row gap-3 mt-6">
                     <!-- Reset Wrong Answers -->
                     <button @click="resetWrongAnswers(frame.id)"
-                            class="bg-yellow-500 text-white px-4 py-2 rounded-lg">
+                            class="flex-1 sm:flex-none bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition">
                         Reset Wrong Answers
                     </button>
 
                     <!-- Next Frame (only if all correct) -->
                     <button @click="nextFrame()"
-                            class="bg-blue-600 text-white px-4 py-2 rounded-lg"
+                            class="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition disabled:opacity-50"
                             :disabled="!allCorrect(frame.id)">
                         Next Frame
                     </button>
@@ -81,20 +85,37 @@
     </template>
 
     <!-- Final Result -->
-    <div x-show="completed" class="bg-white p-8 rounded-xl shadow-xl text-center">
-        <h2 class="text-2xl font-bold mb-4">🎉 Quiz Completed!</h2>
-        <p class="text-lg mb-2">
+    <div x-show="completed"
+         class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-xl text-center transition-colors duration-300">
+        <h2 class="text-xl sm:text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">🎉 Quiz Completed!</h2>
+        <p class="text-lg mb-2 text-gray-700 dark:text-gray-300">
             Correct Answers: <span class="text-green-600 font-bold" x-text="correctCount"></span>
         </p>
-        <p class="text-lg mb-2">
-            Wrong Answers: <span class="text-red-600 font-bold" x-text="wrongCount"></span>
+        <p class="text-lg mb-2 text-gray-700 dark:text-gray-300">
+            Wrong Answers: <span class="text-red-500 font-bold" x-text="wrongCount"></span>
         </p>
-        <p class="text-xl mt-4 font-semibold">
+        <p class="text-xl mt-4 font-semibold text-gray-900 dark:text-gray-100">
             Final Score: <span x-text="correctCount + ' / ' + totalQuestions"></span>
         </p>
     </div>
 </div>
 
+<!-- Footer -->
+<footer class="mt-10 text-center text-gray-600 dark:text-gray-400 text-sm">
+    <p class="flex items-center justify-center space-x-2">
+        <span>Developed with</span>
+        <!-- Animated red heart -->
+        <svg class="w-5 h-5 text-red-600 animate-pulse" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4
+                     4 0 115.656 5.656L10 18.657l-6.828-6.829a4
+                     4 0 010-5.656z" clip-rule="evenodd" />
+        </svg>
+        <span>by <a href="https://vijaygoswami.com" target="_blank" class="underline hover:text-blue-600 dark:hover:text-blue-400">Vijay Goswami</a> &amp;
+        <a href="https://attrixtech.com" target="_blank" class="underline hover:text-blue-600 dark:hover:text-blue-400">Attrix Technologies</a></span>
+    </p>
+</footer>
 <script>
     function quizApp() {
         return {
