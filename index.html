@@ -2,10 +2,23 @@
 <html lang="en" x-data="darkMode()" x-init="init()" :class="{ 'dark': isDark }">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Yoga Quiz Frames</title>
+
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tell Tailwind to use class-based dark mode -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+
+    <!-- Alpine -->
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
+
 <body class="bg-gray-100 dark:bg-gray-900 p-4 sm:p-6 transition-colors duration-300">
 
 <!-- Top bar with Dark Mode Switch -->
