@@ -151,5 +151,114 @@
            class="underline hover:text-blue-600 dark:hover:text-blue-400">Attrix Technologies</a></span>
     </p>
 </footer>
+
+<script>
+    // 🌙 Dark Mode Controller
+    function darkMode() {
+        return {
+            isDark: false,
+            init() {
+                this.isDark = localStorage.getItem('darkMode') === 'true' ||
+                    (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            },
+            toggle() {
+                this.isDark = !this.isDark;
+                localStorage.setItem('darkMode', this.isDark);
+            }
+        }
+    }
+
+    // 🧩 Quiz App Logic
+    function quizApp() {
+        return {
+            frames: Array.from({length: 21}, (_, i) => ({id: i + 1})),
+            questions: [],
+            answers: {},
+            activeFrame: 1,
+            phase: 'content',
+            completed: false,
+            frameContent: "",
+            correctCount: 0,
+            wrongCount: 0,
+            totalQuestions: 0,
+
+            async loadQuestions() {
+                const res = await fetch('questions.json');
+                this.questions = await res.json();
+                this.totalQuestions = this.questions.length;
+                this.questions.forEach(q => q.locked = false);
+
+                const params = new URLSearchParams(window.location.search);
+                const frameParam = parseInt(params.get('frame'));
+                if (frameParam && frameParam >= 1 && frameParam <= this.frames.length) {
+                    this.activeFrame = frameParam;
+                }
+                this.loadFrameContent();
+            },
+
+            async loadFrameContent() {
+                try {
+                    let res = await fetch(`frames/frame${this.activeFrame}.html`);
+                    this.frameContent = await res.text();
+                    const url = new URL(window.location);
+                    url.searchParams.set("frame", this.activeFrame);
+                    window.history.replaceState({}, "", url);
+                } catch (e) {
+                    console.error("Error loading frame:", e);
+                    this.frameContent = `<p class="text-red-600">Frame ${this.activeFrame} could not be loaded.</p>`;
+                }
+            },
+
+            getQuestions(frameId) {
+                return this.questions.filter(q => q.frame_id === frameId);
+            },
+
+            getOptionClass(q, opt) {
+                if (!q.locked) return 'hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2 py-1';
+                if (this.answers[q.id] === opt && this.answers[q.id] !== q.correct) {
+                    return 'bg-red-100 text-red-800 font-semibold rounded px-2 py-1';
+                }
+                return 'opacity-70 px-2 py-1';
+            },
+
+            autoSubmit(q) {
+                if (q.locked) return;
+                if (!this.answers[q.id]) return;
+                if (this.answers[q.id] === q.correct) {
+                    this.correctCount++;
+                } else {
+                    this.wrongCount++;
+                }
+                q.locked = true;
+            },
+
+            resetWrongAnswers(frameId) {
+                let frameQs = this.getQuestions(frameId);
+                frameQs.forEach(q => {
+                    if (q.locked && this.answers[q.id] !== q.correct) {
+                        this.answers[q.id] = null;
+                        q.locked = false;
+                        this.wrongCount = Math.max(0, this.wrongCount - 1);
+                    }
+                });
+            },
+
+            allCorrect(frameId) {
+                let frameQs = this.getQuestions(frameId);
+                return frameQs.every(q => this.answers[q.id] === q.correct);
+            },
+
+            async nextFrame() {
+                this.phase = 'content';
+                if (this.activeFrame < this.frames.length) {
+                    this.activeFrame++;
+                    await this.loadFrameContent();
+                } else {
+                    this.completed = true;
+                }
+            }
+        }
+    }
+</script>
 </body>
 </html>
