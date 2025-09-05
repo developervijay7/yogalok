@@ -28,16 +28,17 @@
             class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:scale-110 transition"
             x-tooltip="Toggle Dark Mode">
         <!-- Sun Icon -->
-        <svg x-show="!isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M12 3v1m0 16v1m8.66-12.66l-.71.71M5.05 18.95l-.71.71M21 12h-1M4 12H3m15.95 6.95l-.71-.71M6.34 6.34l-.71-.71M12 5a7 7 0 100 14 7 7 0 000-14z"/>
+        <!-- Sun Icon (Light Mode) -->
+        <svg x-show="!isDark" xmlns="http://www.w3.org/2000/svg"
+             class="h-6 w-6 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 3.75a.75.75 0 01.75-.75h.75a.75.75 0 010 1.5h-.75A.75.75 0 0112 3.75zM6.22 6.22a.75.75 0 011.06 0l.53.53a.75.75 0 01-1.06 1.06l-.53-.53a.75.75 0 010-1.06zm11.31 0a.75.75 0 010 1.06l-.53.53a.75.75 0 01-1.06-1.06l.53-.53a.75.75 0 011.06 0zM12 6.75a5.25 5.25 0 110 10.5 5.25 5.25 0 010-10.5zm8.25 5.25a.75.75 0 01-.75.75h-.75a.75.75 0 010-1.5h.75a.75.75 0 01.75.75zM6.75 12a.75.75 0 01-.75-.75v-.75a.75.75 0 011.5 0v.75a.75.75 0 01-.75.75zM17.78 17.78a.75.75 0 01-1.06 0l-.53-.53a.75.75 0 111.06-1.06l.53.53a.75.75 0 010 1.06zM6.22 17.78a.75.75 0 010-1.06l.53-.53a.75.75 0 111.06 1.06l-.53.53a.75.75 0 01-1.06 0zM12 19.5a.75.75 0 01.75.75v.75a.75.75 0 01-1.5 0v-.75a.75.75 0 01.75-.75z"/>
         </svg>
-        <!-- Moon Icon -->
-        <svg x-show="isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-200" fill="currentColor"
-             viewBox="0 0 24 24">
-            <path
-                    d="M21.752 15.002A9.718 9.718 0 0112 21.75 9.75 9.75 0 1112 3a9.718 9.718 0 019.752 12.002z" />
+
+        <!-- Moon Icon (Dark Mode) -->
+        <svg x-show="isDark" xmlns="http://www.w3.org/2000/svg"
+             class="h-6 w-6 text-gray-200" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M21.752 15.002a9.72 9.72 0 01-6.79 6.748 9.75 9.75 0 01-9.36-16.916A9.72 9.72 0 0112 2.25c5.385 0 9.75 4.365 9.75 9.75 0 1.049-.166 2.058-.498 3.002z"/>
         </svg>
     </button>
 </header>
