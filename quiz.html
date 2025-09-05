@@ -23,7 +23,7 @@
 
 <!-- Top bar with Dark Mode Switch -->
 <header class="flex justify-between items-center max-w-4xl mx-auto mb-6">
-    <h1 class="text-2xl sm:text-xl font-bold text-gray-900 dark:text-gray-100">🧘 Yoga Quiz</h1>
+    <h1 class="text-2xl sm:text-xl font-bold text-gray-900 dark:text-gray-100">🧘 Yoga Learning System</h1>
     <button @click="toggle()"
             class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:scale-110 transition"
             x-tooltip="Toggle Dark Mode">
@@ -122,16 +122,15 @@
     <div x-show="completed"
          class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-xl text-center transition-colors duration-300">
         <h2 class="text-xl sm:text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">🎉 Quiz Completed!</h2>
-        <p class="text-lg mb-2 text-gray-700 dark:text-gray-300">
-            Correct Answers: <span class="text-green-600 font-bold" x-text="correctCount"></span>
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-4">
+            Thank you for participating in the <strong>Yoga Learning System</strong>. 🌿
+            Your dedication to learning and self-growth is truly appreciated!
         </p>
-        <p class="text-lg mb-2 text-gray-700 dark:text-gray-300">
-            Wrong Answers: <span class="text-red-500 font-bold" x-text="wrongCount"></span>
-        </p>
-        <p class="text-xl mt-4 font-semibold text-gray-900 dark:text-gray-100">
-            Final Score: <span x-text="correctCount + ' / ' + totalQuestions"></span>
+        <p class="text-md text-gray-600 dark:text-gray-400">
+            Keep practicing, stay curious, and continue your journey of knowledge. 🙏
         </p>
     </div>
+
 </div>
 
 <!-- Footer -->
